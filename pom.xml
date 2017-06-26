@@ -18,6 +18,10 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+					<compilerArgs>
+	                    <arg>-XDignore.symbol.file</arg>
+	                </compilerArgs>
+	                <fork>true</fork>
 				</configuration>
 			</plugin>
 		</plugins>
