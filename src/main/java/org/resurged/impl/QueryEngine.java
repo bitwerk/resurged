@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.Arrays;
 
 import org.resurged.impl.marshalling.MarshallingFactory;
 import org.resurged.jdbc.DataSet;
@@ -17,7 +18,7 @@ import org.resurged.jdbc.Update;
 public class QueryEngine {
 
 	public static <L> DataSet<L> executeQuery(Class<L> returnType, Connection con, String query, Object[] params) {
-		Log.debug(QueryEngine.class, "executeQuery(" + query + ", " + params + ")");
+		Log.info(QueryEngine.class, "executeQuery(" + query + ", " + Arrays.toString(params) + ")");
 		
 		PreparedStatement stmt = null;
 		try {
@@ -42,7 +43,7 @@ public class QueryEngine {
 	}
 	
 	public static <L> DataSet<L> executeUpdate(Class<L> returnType, Update annotation, Connection con, String query, Object[] params) {
-		Log.info(QueryEngine.class, "executeUpdate(" + query + ", " + params + ")");
+		Log.info(QueryEngine.class, "executeUpdate(" + query + ", " + Arrays.toString(params) + ")");
 		
 		if(annotation.keys()==GeneratedKeys.NO_KEYS_RETURNED)
 			throw new SQLRuntimeException("Auto generated keys can only be returned, if the QueryInterface method is annotated with GeneratedKeys.RETURNED_KEYS_DRIVER_DEFINED or GeneratedKeys.RETURNED_KEYS_COLUMNS_SPECIFIED");
@@ -114,7 +115,7 @@ public class QueryEngine {
 	}
 
 	public static int executeUpdate(Connection con, String query, Object[] params) {
-		Log.info(QueryEngine.class, "executeUpdate(" + query + ", " + params + ")");
+		Log.info(QueryEngine.class, "executeUpdate(" + query + ", " + Arrays.toString(params) + ")");
 		
 		PreparedStatement stmt = null;
 		try {
@@ -216,10 +217,10 @@ class ParameterizedQuery {
 						int sqlType = getNullParameterType(idx);
 						stmt.setNull(i + 1, sqlType);
 					} else {
-						Log.info(this, params[idx].toString());
+						Log.debug(this, params[idx].toString());
 						
 						if(params[idx] instanceof java.util.Date)
-							params[idx]=new java.sql.Date(((java.util.Date)params[idx]).getTime());
+							params[idx]=new java.sql.Timestamp(((java.util.Date)params[idx]).getTime());
 						
 						int sqlType = getParameterType(idx);
 						if (sqlType != UNDEFINED_SQL_TYPE)
