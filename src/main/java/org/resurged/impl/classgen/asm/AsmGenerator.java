@@ -41,7 +41,7 @@ public class AsmGenerator extends AbstractGenerator {
 			// and recomputed. With this option you still have to compute the frames yourself.
 			// 
 			// new ClassWriter(ClassWriter.COMPUTE_FRAMES)
-			// Everything is computed automatically. You don’t have to call visitFrame, but you
+			// Everything is computed automatically. You don't have to call visitFrame, but you
 			// must still call visitMaxs (arguments will be ignored and recomputed).
 			ClassWriter cv = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 //			AsmAdapter adapter = new AsmAdapter(cv, ifc);
